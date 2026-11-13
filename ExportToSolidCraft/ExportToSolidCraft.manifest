@@ -6,7 +6,7 @@
     "description": {
         "": "Export the open design to SolidCraft with its timeline: parameters, sketches and features as editable history."
     },
-    "version": "0.1.0",
+    "version": "0.2.0",
     "runOnStartup": true,
     "supportedOS": "mac|windows",
     "editEnabled": true

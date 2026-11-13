@@ -58,7 +58,7 @@ class Build(unittest.TestCase):
     def test_demo_matches_fusion(self):
         data = json.load(open(DEMO))
         with tempfile.TemporaryDirectory() as d:
-            report = build.build(data, os.path.join(d, "demo.solidcraft"), build.DEFAULT_CLI)
+            report = build.build(data, os.path.join(d, "demo" + build.EXT), build.DEFAULT_CLI)
         text = "\n".join(report)
         self.assertIn("0 failed", text)
         self.assertIn("all match Fusion", text)

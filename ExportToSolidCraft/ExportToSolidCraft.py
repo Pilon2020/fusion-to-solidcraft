@@ -1,5 +1,5 @@
 """Export to SolidCraft: a button in Fusion (Utilities > Export to SolidCraft) that turns the
-open design into a .solidcraft design with its history, and opens it in SolidCraft."""
+open design into a SolidCraft (.sc) design with its history, and opens it in SolidCraft."""
 
 import adsk.core
 import adsk.fusion
@@ -173,11 +173,11 @@ def convert(app, ui, doc, out, cli, progress, done, status):
         doc.activate()
     design = adsk.fusion.Design.cast(doc.products.itemByProductType("DesignProductType"))
     folder = os.path.dirname(out)
-    # Linked designs become .solidcraft files next to this one, linked the same way.
+    # Linked designs become .sc files next to this one, linked the same way.
     for occ in design.rootComponent.allOccurrences:
         if occ.isReferencedComponent and occ.documentReference:
             name = occ.documentReference.dataFile.name
-            target = os.path.join(folder, name + ".solidcraft")
+            target = os.path.join(folder, name + build.EXT)
             if name in done or os.path.exists(target):
                 continue
             done.add(name)
@@ -246,16 +246,16 @@ class ExecuteHandler(adsk.core.CommandEventHandler):
                 return
             dlg = ui.createFileDialog()
             dlg.title = "Export to SolidCraft"
-            dlg.filter = "SolidCraft design (*.solidcraft)"
-            dlg.initialFilename = doc.name + ".solidcraft"
+            dlg.filter = "SolidCraft design (*.sc)"
+            dlg.initialFilename = doc.name + ".sc"
             s = settings()
             if s.get("folder") and os.path.isdir(s["folder"]):
                 dlg.initialDirectory = s["folder"]
             if dlg.showSave() != adsk.core.DialogResults.DialogOK:
                 return
             out = dlg.filename
-            if not out.endswith(".solidcraft"):
-                out += ".solidcraft"
+            if not out.endswith(".sc"):
+                out += ".sc"
             s["folder"] = os.path.dirname(out)
             save_settings(s)
             status = Status(ui, cli)

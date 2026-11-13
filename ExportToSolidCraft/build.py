@@ -1,6 +1,6 @@
 """Build a SolidCraft design from extract.py's JSON.
 
-    python3 build.py design.json out.solidcraft [--cli PATH]
+    python3 build.py design.json out.sc [--cli PATH]
 
 Runs the translated commands one at a time in a headless SolidCraft session, names the bodies
 as Fusion does, checks every body's volume against Fusion's after each step, and saves the
@@ -18,6 +18,8 @@ import translate
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CLI = os.environ.get("SOLIDCRAFT_CLI") or shutil.which("solidcraft-cli") or "solidcraft-cli"
+# SolidCraft 0.41 saves designs as .sc; .solidcraft is the name earlier releases used.
+EXT = ".sc"
 
 
 class Session:
@@ -362,7 +364,7 @@ def build(data, out, cli=DEFAULT_CLI, check_every_step=True, exporter=None, tick
     for c in commands:  # a linked design is converted on its own first, next to this one
         p = c["params"].get("path")
         if c["command"] == "component.insert_design" and isinstance(p, dict):
-            c["params"]["path"] = os.path.join(folder, p["linked"] + ".solidcraft")
+            c["params"]["path"] = os.path.join(folder, p["linked"] + EXT)
             c["params"]["translate"] = [float(v.split()[0]) for v in c["params"]["translate"]]
             if not os.path.exists(c["params"]["path"]):
                 notes.append((c["step"], "linked design %s not converted yet: convert it first" % p["linked"]))

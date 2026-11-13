@@ -1,4 +1,4 @@
-Untitled -> out/demo/Demo-box.solidcraft
+Untitled -> examples/Demo-box.sc
 
 53 commands, 0 failed, 0 optional dropped, 0 steps brought in as Fusion's result
 final bodies: all match Fusion

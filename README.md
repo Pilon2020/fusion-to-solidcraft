@@ -30,8 +30,8 @@ More detail: [docs/how-it-works.md](docs/how-it-works.md).
 
 ## Install
 
-1. Install SolidCraft. The add-in needs `solidcraft-cli`, which comes with the app, and finds it
-   on its own. If it can't, it asks once.
+1. Install SolidCraft 0.41.0 or later. The add-in needs `solidcraft-cli`, which comes with the app,
+   and finds it on its own. If it can't, it asks once.
 2. Download this repository (Code → Download ZIP) and unzip it.
 3. In Fusion, press **Shift+S** and open the **Add-Ins** tab. Click **+** and pick the
    `ExportToSolidCraft` folder. Select it, click **Run**, and tick **Run on Startup** if you want
@@ -46,7 +46,8 @@ More detail: [docs/how-it-works.md](docs/how-it-works.md).
    result in SolidCraft, show the report, or show the folder. The report is saved beside the design
    as `<name>.report.txt`.
 
-Linked designs are exported as their own `.solidcraft` files and linked the same way.
+Designs are saved as `.sc` files, SolidCraft 0.41's design format. Linked designs are exported as
+their own `.sc` files and linked the same way.
 Fusion's window is busy while the export runs. Large designs take a few minutes.
 
 ## What carries over
@@ -93,7 +94,7 @@ Fusion that runs Python sent to `127.0.0.1:7654/execute`, with a token read from
 
 ```sh
 dev/fx_extract.sh "My design" my-design.json      # read the open design's timeline
-python3 ExportToSolidCraft/build.py my-design.json out/my-design.solidcraft --fusion
+python3 ExportToSolidCraft/build.py my-design.json out/my-design.sc --fusion
 ```
 
 `--fusion` lets a step that doesn't match fall back to Fusion's result. `--cli PATH` picks the
